@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <rect width="1280" height="640" fill="#0B0F17" />
+
+  <!-- Top Bar -->
+  <rect x="0" y="0" width="1280" height="54" fill="#0E131D" />
+  <line x1="0" y1="54" x2="1280" y2="54" stroke="#232D3F" />
+  <text x="68" y="32" fill="#FFFFFF" font-size="15" font-weight="700">Entrenador FHS Linux</text>
+  <text x="360" y="32" fill="#94A3B8" font-size="13">Simulador FHS (16 Casos)</text>
+  <text x="554" y="32" fill="#94A3B8" font-size="13">Particiones y Montajes</text>
+  <text x="724" y="32" fill="#94A3B8" font-size="13">Matriz FHS 3.0</text>
+  <text x="845" y="32" fill="#FFFFFF" font-size="13" font-weight="600">Test LPIC-1 e Informe</text>
+  <line x1="845" y1="44" x2="988" y2="44" stroke="#34D399" stroke-width="2" />
+
+  <!-- Left Card: LPIC-1 Quiz -->
+  <rect x="24" y="76" width="710" height="532" rx="8" fill="#111722" stroke="#232D3F" />
+  <text x="48" y="106" fill="#94A3B8" font-size="12">Preparación LPIC-1 (Examen 101 · Objetivo 104.7) · CompTIA Linux+</text>
+  <text x="48" y="130" fill="#FFFFFF" font-size="18" font-weight="700">Pregunta 6 de 10</text>
+  <text x="590" y="122" fill="#CBD5E1" font-family="monospace" font-size="12">Aciertos: 6 / 10</text>
+  <line x1="48" y1="146" x2="710" y2="146" stroke="#232D3F" />
+
+  <text x="48" y="180" fill="#F8FAFC" font-size="15" font-weight="600">Un compañero intenta hacer "cd /dev/sdb1" para ver los archivos de su</text>
+  <text x="48" y="202" fill="#F8FAFC" font-size="15" font-weight="600">pendrive y recibe "Not a directory". ¿Por qué?</text>
+
+  <!-- Options -->
+  <rect x="48" y="226" width="662" height="46" rx="6" fill="#064E3B" fill-opacity="0.4" stroke="#10B981" />
+  <text x="64" y="254" fill="#A7F3D0" font-family="monospace" font-size="11">Porque /dev/sdb1 es un nodo de bloques que debe montarse en /mnt/pendrive</text>
+  <text x="620" y="254" fill="#34D399" font-size="12" font-weight="700">✓ Correcta</text>
+
+  <rect x="48" y="284" width="662" height="44" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="64" y="311" fill="#64748B" font-family="monospace" font-size="11">Porque los pendrives USB se crean dentro de /proc/usb</text>
+
+  <rect x="48" y="340" width="662" height="44" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="64" y="367" fill="#64748B" font-family="monospace" font-size="11">Porque falta reiniciar el servidor con el pendrive conectado</text>
+
+  <!-- Explanation Box -->
+  <rect x="48" y="404" width="662" height="114" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="64" y="428" fill="#E2E8F0" font-size="12" font-weight="700">Explicación según el estándar FHS 3.0:</text>
+  <text x="64" y="450" fill="#CBD5E1" font-size="12">Los ficheros de bloques en /dev representan el hardware crudo. Para navegar por</text>
+  <text x="64" y="470" fill="#CBD5E1" font-size="12">sus carpetas hay que acoplar su sistema de archivos en un punto de montaje con mount.</text>
+
+  <!-- Right Card: Exportable Student Report for Moodle / Classroom -->
+  <rect x="754" y="76" width="502" height="532" rx="8" fill="#111722" stroke="#232D3F" />
+  <text x="778" y="106" fill="#34D399" font-size="12" font-weight="600">Entregable para Moodle / Classroom</text>
+  <text x="778" y="130" fill="#FFFFFF" font-size="16" font-weight="700">Generador de Informe de Práctica del Alumno</text>
+  <line x1="778" y1="146" x2="1232" y2="146" stroke="#232D3F" />
+
+  <text x="778" y="174" fill="#CBD5E1" font-size="12" font-weight="600">Nombre y Apellidos del Alumno/a</text>
+  <rect x="778" y="182" width="454" height="34" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="792" y="204" fill="#F8FAFC" font-size="12">Laura Gómez Pérez</text>
+
+  <text x="778" y="238" fill="#CBD5E1" font-size="12" font-weight="600">Curso / Ciclo Formativo</text>
+  <rect x="778" y="246" width="454" height="34" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="792" y="268" fill="#F8FAFC" font-size="12">1º ASIR · Implantación de Sistemas Operativos</text>
+
+  <rect x="778" y="296" width="454" height="232" rx="6" fill="#080B11" stroke="#232D3F" />
+  <g font-family="monospace" font-size="10.5" fill="#CBD5E1">
+    <text x="790" y="318" fill="#6EE7B7">===================================================</text>
+    <text x="790" y="334" fill="#FFFFFF" font-weight="700"> INFORME DE PRÁCTICA: JERARQUÍA FHS LINUX (FHS 3.0)</text>
+    <text x="790" y="350" fill="#6EE7B7"> Plataforma: Un Fantasma en el Sistema</text>
+    <text x="790" y="366">===================================================</text>
+    <text x="790" y="384">Alumno/a: Laura Gómez Pérez</text>
+    <text x="790" y="400">Grupo: 1º ASIR · Implantación de Sistemas Operativos</text>
+    <text x="790" y="420" fill="#38BDF8">1. INCIDENCIAS PRÁCTICAS RESUELTAS: 16 / 16</text>
+    <text x="790" y="438">  [OK] Caso #01: Log llena el disco -&gt; /var/log/syslog</text>
+    <text x="790" y="454">  [OK] Caso #02: Fallo Nginx -&gt; /etc/nginx/nginx.conf</text>
+    <text x="790" y="470">  [OK] Caso #03: Montar USB -&gt; /mnt/pendrive</text>
+    <text x="790" y="486">  [OK] Caso #04: Nodo de bloque -&gt; /dev/sdb1</text>
+    <text x="790" y="508" fill="#34D399">2. TEST CERTIFICACIÓN LPIC-1 (104.7): 10 / 10 (100%)</text>
+  </g>
+
+  <rect x="778" y="546" width="290" height="38" rx="6" fill="#34D399" />
+  <text x="836" y="569" fill="#020617" font-size="12" font-weight="700">⬇ Descargar Informe (.txt)</text>
+  <rect x="1080" y="546" width="152" height="38" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="1116" y="569" fill="#E2E8F0" font-size="12" font-weight="600">📋 Copiar texto</text>
+</svg>

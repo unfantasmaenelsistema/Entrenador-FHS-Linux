@@ -1,0 +1,6 @@
+{
+  "name": "Entrenador FHS Linux · Un Fantasma en el Sistema",
+  "description": "Simulador interactivo del estándar de jerarquía del sistema de ficheros Linux (FHS 3.0) con casos prácticos de administración de sistemas y terminal integrada.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

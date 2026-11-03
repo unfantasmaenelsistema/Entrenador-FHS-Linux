@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 680" width="1280" height="680" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <rect width="1280" height="680" fill="#0B0F17" />
+
+  <!-- Top Bar -->
+  <rect x="0" y="0" width="1280" height="54" fill="#0E131D" />
+  <line x1="0" y1="54" x2="1280" y2="54" stroke="#232D3F" />
+  <text x="68" y="32" fill="#FFFFFF" font-size="15" font-weight="700">Entrenador FHS Linux</text>
+  <text x="360" y="32" fill="#94A3B8" font-size="13">Simulador FHS (16 Casos)</text>
+  <text x="554" y="32" fill="#94A3B8" font-size="13">Particiones y Montajes</text>
+  <text x="724" y="32" fill="#FFFFFF" font-size="13" font-weight="600">Matriz FHS 3.0</text>
+  <line x1="724" y1="44" x2="820" y2="44" stroke="#34D399" stroke-width="2" />
+  <text x="845" y="32" fill="#94A3B8" font-size="13">Test LPIC-1 e Informe</text>
+
+  <!-- 2x2 Orthogonal Matrix Section -->
+  <rect x="24" y="72" width="1232" height="214" rx="8" fill="#111722" stroke="#232D3F" />
+  <text x="44" y="98" fill="#34D399" font-size="12" font-weight="600">Especificación Linux Foundation FHS 3.0 · Clasificación Ortogonal (Estático/Variable × Compartible/Local)</text>
+
+  <!-- Quadrant 1 -->
+  <rect x="44" y="114" width="282" height="152" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="60" y="138" fill="#6EE7B7" font-size="13" font-weight="700">Estático + Compartible</text>
+  <text x="60" y="160" fill="#94A3B8" font-size="11">Binarios, librerías y manuales que no</text>
+  <text x="60" y="176" fill="#94A3B8" font-size="11">cambian sin acción del administrador y</text>
+  <text x="60" y="192" fill="#94A3B8" font-size="11">pueden montarse en modo solo lectura.</text>
+  <text x="60" y="236" fill="#F8FAFC" font-family="monospace" font-size="12" font-weight="700">/usr · /bin · /sbin · /lib · /opt</text>
+
+  <!-- Quadrant 2 -->
+  <rect x="342" y="114" width="282" height="152" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="358" y="138" fill="#38BDF8" font-size="13" font-weight="700">Estático + No Compartible</text>
+  <text x="358" y="160" fill="#94A3B8" font-size="11">Configuración local y ficheros de</text>
+  <text x="358" y="176" fill="#94A3B8" font-size="11">arranque específicos de esta máquina</text>
+  <text x="358" y="192" fill="#94A3B8" font-size="11">concreta.</text>
+  <text x="358" y="236" fill="#F8FAFC" font-family="monospace" font-size="12" font-weight="700">/etc · /boot · /root</text>
+
+  <!-- Quadrant 3 -->
+  <rect x="640" y="114" width="282" height="152" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="656" y="138" fill="#FCD34D" font-size="13" font-weight="700">Variable + Compartible</text>
+  <text x="656" y="160" fill="#94A3B8" font-size="11">Datos que cambian con el uso y</text>
+  <text x="656" y="176" fill="#94A3B8" font-size="11">pueden compartirse por red (NFS)</text>
+  <text x="656" y="192" fill="#94A3B8" font-size="11">entre varios servidores o clientes.</text>
+  <text x="656" y="236" fill="#F8FAFC" font-family="monospace" font-size="12" font-weight="700">/home · /srv · /var/mail</text>
+
+  <!-- Quadrant 4 -->
+  <rect x="938" y="114" width="298" height="152" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="954" y="138" fill="#FDA4AF" font-size="13" font-weight="700">Variable + No Compartible</text>
+  <text x="954" y="160" fill="#94A3B8" font-size="11">Registros (logs), estados de bases de</text>
+  <text x="954" y="176" fill="#94A3B8" font-size="11">datos, colas y temporales exclusivos</text>
+  <text x="954" y="192" fill="#94A3B8" font-size="11">del host local.</text>
+  <text x="954" y="236" fill="#F8FAFC" font-family="monospace" font-size="12" font-weight="700">/var/log · /var/lib · /run · /tmp</text>
+
+  <!-- Reference Table -->
+  <rect x="24" y="304" width="1232" height="350" rx="8" fill="#111722" stroke="#232D3F" />
+  <rect x="24" y="304" width="1232" height="38" rx="8" fill="#0E131D" />
+  <text x="44" y="328" fill="#94A3B8" font-size="11" font-weight="600">Directorio</text>
+  <text x="150" y="328" fill="#94A3B8" font-size="11" font-weight="600">Naturaleza · Ámbito</text>
+  <text x="350" y="328" fill="#94A3B8" font-size="11" font-weight="600">Propósito según FHS 3.0</text>
+  <text x="720" y="328" fill="#94A3B8" font-size="11" font-weight="600">Clave Didáctica / Examen LPIC-1</text>
+
+  <g font-size="12">
+    <text x="44" y="368" fill="#6EE7B7" font-family="monospace" font-weight="700">/etc</text>
+    <text x="150" y="368" fill="#CBD5E1">Estático · No compartible</text>
+    <text x="350" y="368" fill="#E2E8F0">Configuración estática local al sistema y servicios</text>
+    <text x="720" y="368" fill="#94A3B8">Nunca debe alojar binarios ni logs que crezcan.</text>
+    <line x1="24" y1="384" x2="1256" y2="384" stroke="#1E2636" />
+
+    <text x="44" y="412" fill="#6EE7B7" font-family="monospace" font-weight="700">/var</text>
+    <text x="150" y="412" fill="#CBD5E1">Variable · No compartible</text>
+    <text x="350" y="412" fill="#E2E8F0">Logs (/var/log), BBDD (/var/lib), cachés y /var/tmp</text>
+    <text x="720" y="412" fill="#94A3B8">Primer lugar a auditar cuando el disco se llena.</text>
+    <line x1="24" y1="428" x2="1256" y2="428" stroke="#1E2636" />
+
+    <text x="44" y="456" fill="#6EE7B7" font-family="monospace" font-weight="700">/mnt vs /media</text>
+    <text x="150" y="456" fill="#CBD5E1">Montajes · No compartible</text>
+    <text x="350" y="456" fill="#E2E8F0">Puntos de montaje temporal manual (/mnt) vs auto (/media)</text>
+    <text x="720" y="456" fill="#94A3B8">/mnt es para el sysadmin en consola; /media para udisks2.</text>
+    <line x1="24" y1="472" x2="1256" y2="472" stroke="#1E2636" />
+
+    <text x="44" y="500" fill="#6EE7B7" font-family="monospace" font-weight="700">/dev</text>
+    <text x="150" y="500" fill="#CBD5E1">Dispositivos · udev</text>
+    <text x="350" y="500" fill="#E2E8F0">Nodos especiales de bloques (b) y caracteres (c)</text>
+    <text x="720" y="500" fill="#94A3B8">/dev/sdb1 es el nodo de hardware crudo, no la carpeta montada.</text>
+    <line x1="24" y1="516" x2="1256" y2="516" stroke="#1E2636" />
+
+    <text x="44" y="544" fill="#6EE7B7" font-family="monospace" font-weight="700">/proc y /sys</text>
+    <text x="150" y="544" fill="#CBD5E1">Virtual (RAM) · Kernel</text>
+    <text x="350" y="544" fill="#E2E8F0">Procesos, meminfo, cpuinfo, sysctl y topología hardware</text>
+    <text x="720" y="544" fill="#94A3B8">Ocupan 0 bytes en disco; se generan al vuelo en memoria RAM.</text>
+    <line x1="24" y1="560" x2="1256" y2="560" stroke="#1E2636" />
+
+    <text x="44" y="588" fill="#6EE7B7" font-family="monospace" font-weight="700">/usr/local/bin</text>
+    <text x="150" y="588" fill="#CBD5E1">Estático · Compartible</text>
+    <text x="350" y="588" fill="#E2E8F0">Scripts y binarios compilados localmente por el admin</text>
+    <text x="720" y="588" fill="#94A3B8">Protegido frente a sobreescrituras de apt / dnf upgrade.</text>
+  </g>
+</svg>

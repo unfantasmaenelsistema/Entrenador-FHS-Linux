@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 680" width="1280" height="680" font-family="'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <rect width="1280" height="680" fill="#0B0F17" />
+
+  <!-- Top Bar -->
+  <rect x="0" y="0" width="1280" height="54" fill="#0E131D" />
+  <line x1="0" y1="54" x2="1280" y2="54" stroke="#232D3F" />
+  <text x="68" y="32" fill="#FFFFFF" font-size="15" font-weight="700">Entrenador FHS Linux</text>
+  <text x="360" y="32" fill="#94A3B8" font-size="13">Simulador FHS (16 Casos)</text>
+  <text x="554" y="32" fill="#FFFFFF" font-size="13" font-weight="600">Particiones y Montajes</text>
+  <line x1="554" y1="44" x2="700" y2="44" stroke="#34D399" stroke-width="2" />
+  <text x="724" y="32" fill="#94A3B8" font-size="13">Matriz FHS 3.0</text>
+  <text x="845" y="32" fill="#94A3B8" font-size="13">Test LPIC-1 e Informe</text>
+
+  <!-- Main Header Box -->
+  <rect x="24" y="72" width="1232" height="156" rx="8" fill="#111722" stroke="#232D3F" />
+  <text x="44" y="98" fill="#34D399" font-size="12" font-weight="600">Laboratorio Interactivo de Almacenamiento · Bloques (/dev) ↔ Puntos de Montaje FHS</text>
+  <text x="44" y="122" fill="#FFFFFF" font-size="17" font-weight="700">Arquitectura de Montajes, Particiones y Aislamiento de /var en Producción</text>
+  <text x="44" y="144" fill="#CBD5E1" font-size="12">En Linux no existen letras de unidad (C:, D:). Todo dispositivo de bloques (/dev/sda1, /dev/sdb1, /dev/nvme0n1p1) se acopla al árbol único (/).</text>
+
+  <!-- Interactive Toggles -->
+  <rect x="820" y="92" width="212" height="32" rx="6" fill="#064E3B" stroke="#34D399" />
+  <text x="834" y="112" fill="#A7F3D0" font-size="11" font-weight="600">✓ USB Montado en /mnt/pendrive</text>
+  <rect x="1042" y="92" width="194" height="32" rx="6" fill="#0C4A6E" stroke="#38BDF8" />
+  <text x="1056" y="112" fill="#BAE6FD" font-size="11" font-weight="600">✓ /var aislado en NVMe</text>
+
+  <!-- Protection Status Banner -->
+  <rect x="44" y="162" width="1192" height="50" rx="6" fill="#064E3B" fill-opacity="0.35" stroke="#10B981" />
+  <text x="62" y="183" fill="#6EE7B7" font-size="12" font-weight="700">✓ PROTECCIÓN ACTIVA: /var está montado en su propia partición (/dev/nvme0n1p1), por lo que la partición raíz (/) permanece sana al 14%.</text>
+  <text x="62" y="201" fill="#CBD5E1" font-size="11">Por esta razón el estándar FHS separa todos los datos dinámicos en /var: evita que un bucle de logs deje inoperativo el sistema raíz (/).</text>
+
+  <!-- Left Card: lsblk -f -->
+  <rect x="24" y="246" width="606" height="404" rx="8" fill="#111722" stroke="#232D3F" />
+  <text x="44" y="276" fill="#FFFFFF" font-size="14" font-weight="700">💽 Dispositivos de Bloques en /dev (salida de lsblk -f)</text>
+  <line x1="44" y1="290" x2="610" y2="290" stroke="#232D3F" />
+
+  <!-- sda -->
+  <rect x="44" y="306" width="566" height="96" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="60" y="328" fill="#FCD34D" font-family="monospace" font-size="12" font-weight="700">/dev/sda (Disco Principal SATA · 50 GB)</text>
+  <text x="470" y="328" fill="#94A3B8" font-family="monospace" font-size="11">brw-rw---- (8, 0)</text>
+  <text x="76" y="352" fill="#6EE7B7" font-family="monospace" font-size="12">└─ /dev/sda1 (ext4)</text>
+  <text x="466" y="352" fill="#FFFFFF" font-family="monospace" font-size="12" font-weight="700">Montado en: /</text>
+  <rect x="76" y="364" width="516" height="8" rx="4" fill="#1E293B" />
+  <rect x="76" y="364" width="74" height="8" rx="4" fill="#34D399" />
+  <text x="76" y="390" fill="#94A3B8" font-family="monospace" font-size="11">UUID: 8f4b2c10-9a11-4d3e-8b12-09a81f23e101 · Uso: 14% de 50 GB</text>
+
+  <!-- sdb -->
+  <rect x="44" y="416" width="566" height="96" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="60" y="438" fill="#FCD34D" font-family="monospace" font-size="12" font-weight="700">/dev/sdb (Kingston DataTraveler USB 3.0 · 32 GB)</text>
+  <text x="470" y="438" fill="#94A3B8" font-family="monospace" font-size="11">brw-rw---- (8, 16)</text>
+  <text x="76" y="462" fill="#FDE68A" font-family="monospace" font-size="12">└─ /dev/sdb1 (vfat · USB_RESCATE)</text>
+  <text x="412" y="462" fill="#6EE7B7" font-family="monospace" font-size="12" font-weight="700">Montado en: /mnt/pendrive</text>
+  <text x="76" y="492" fill="#94A3B8" font-family="monospace" font-size="11">UUID: 4A8F-9C21 · Montaje manual temporal según FHS 3.0</text>
+
+  <!-- nvme0n1 -->
+  <rect x="44" y="526" width="566" height="104" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="60" y="548" fill="#38BDF8" font-family="monospace" font-size="12" font-weight="700">/dev/nvme0n1 (Disco NVMe Dedicado · 50 GB)</text>
+  <text x="462" y="548" fill="#94A3B8" font-family="monospace" font-size="11">brw-rw---- (259, 0)</text>
+  <text x="76" y="572" fill="#BAE6FD" font-family="monospace" font-size="12">└─ /dev/nvme0n1p1 (ext4)</text>
+  <text x="442" y="572" fill="#6EE7B7" font-family="monospace" font-size="12" font-weight="700">Montado en: /var</text>
+  <rect x="76" y="586" width="516" height="8" rx="4" fill="#1E293B" />
+  <rect x="76" y="586" width="440" height="8" rx="4" fill="#F59E0B" />
+  <text x="76" y="614" fill="#94A3B8" font-family="monospace" font-size="11">Volumen aislado para logs, bases de datos (/var/lib) y colas</text>
+
+  <!-- Right Card: df -h & Pseudo-filesystems -->
+  <rect x="650" y="246" width="606" height="404" rx="8" fill="#111722" stroke="#232D3F" />
+  <text x="670" y="276" fill="#FFFFFF" font-size="14" font-weight="700">⚙️ Sistemas Montados (df -h y Pseudo-Sistemas en RAM)</text>
+  <line x1="670" y1="290" x2="1236" y2="290" stroke="#232D3F" />
+
+  <g font-family="monospace" font-size="12">
+    <text x="670" y="316" fill="#94A3B8">S.ficheros</text>
+    <text x="830" y="316" fill="#94A3B8">Tipo</text>
+    <text x="970" y="316" fill="#94A3B8">Tamaño</text>
+    <text x="1055" y="316" fill="#94A3B8">Uso%</text>
+    <text x="1125" y="316" fill="#94A3B8">Montado en</text>
+    <line x1="670" y1="326" x2="1236" y2="326" stroke="#232D3F" />
+
+    <text x="670" y="352" fill="#FCD34D">/dev/sda1</text>
+    <text x="830" y="352" fill="#CBD5E1">ext4</text>
+    <text x="980" y="352" fill="#E2E8F0">50G</text>
+    <text x="1062" y="352" fill="#34D399" font-weight="700">14%</text>
+    <text x="1125" y="352" fill="#FFFFFF" font-weight="700">/</text>
+
+    <text x="670" y="384" fill="#38BDF8">/dev/nvme0n1p1</text>
+    <text x="830" y="384" fill="#CBD5E1">ext4</text>
+    <text x="980" y="384" fill="#E2E8F0">50G</text>
+    <text x="1062" y="384" fill="#FBBF24" font-weight="700">88%</text>
+    <text x="1125" y="384" fill="#6EE7B7" font-weight="700">/var</text>
+
+    <text x="670" y="416" fill="#FCD34D">/dev/sdb1</text>
+    <text x="830" y="416" fill="#CBD5E1">vfat</text>
+    <text x="980" y="416" fill="#E2E8F0">32G</text>
+    <text x="1062" y="416" fill="#34D399" font-weight="700">12%</text>
+    <text x="1125" y="416" fill="#6EE7B7" font-weight="700">/mnt/pendrive</text>
+
+    <text x="670" y="448" fill="#38BDF8">devtmpfs</text>
+    <text x="830" y="448" fill="#94A3B8">RAM (udev)</text>
+    <text x="972" y="448" fill="#E2E8F0">7.8G</text>
+    <text x="1070" y="448" fill="#94A3B8">0%</text>
+    <text x="1125" y="448" fill="#E2E8F0">/dev</text>
+
+    <text x="670" y="480" fill="#38BDF8">proc</text>
+    <text x="830" y="480" fill="#94A3B8">procfs (RAM)</text>
+    <text x="986" y="480" fill="#38BDF8">0B</text>
+    <text x="1074" y="480" fill="#94A3B8">-</text>
+    <text x="1125" y="480" fill="#E2E8F0">/proc</text>
+
+    <text x="670" y="512" fill="#38BDF8">sysfs</text>
+    <text x="830" y="512" fill="#94A3B8">sysfs (RAM)</text>
+    <text x="986" y="512" fill="#38BDF8">0B</text>
+    <text x="1074" y="512" fill="#94A3B8">-</text>
+    <text x="1125" y="512" fill="#E2E8F0">/sys</text>
+  </g>
+
+  <rect x="670" y="544" width="566" height="86" rx="6" fill="#0B0F17" stroke="#232D3F" />
+  <text x="686" y="568" fill="#FFFFFF" font-size="12" font-weight="700">Concepto Clave de Examen: ¿Por qué /proc y /sys muestran 0B?</text>
+  <text x="686" y="590" fill="#94A3B8" font-size="11">Porque no existen en ningún disco físico. Sus archivos se generan al vuelo en memoria RAM</text>
+  <text x="686" y="608" fill="#94A3B8" font-size="11">en el preciso instante en que un proceso ejecuta read() sobre ellos (ej. cat /proc/meminfo).</text>
+</svg>
