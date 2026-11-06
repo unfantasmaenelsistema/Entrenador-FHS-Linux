@@ -40,7 +40,7 @@ export const FHS_MISSIONS: FHSMission[] = [
     explanation:
       '¡Correcto! En el estándar FHS, /var/log centraliza los registros del sistema y demonios. En distribuciones Debian/Ubuntu, /var/log/syslog almacena la actividad global del sistema. Para vaciar un archivo de log gigante sin romper el descriptor abierto por rsyslogd, se utiliza "truncate -s 0 /var/log/syslog" en lugar de borrarlo con rm.',
     remediationCommand: 'truncate -s 0 /var/log/syslog',
-    remediationEffect: 'Archivo /var/log/syslog truncado en vivo de 42.8G a 0B. Espacio en / recuperado (uso actual: 18%).',
+    remediationEffect: 'Archivo /var/log/syslog truncado en vivo de 42.8G a 0B. Espacio en / recuperado (uso actual: 14 %).',
     realWorldCommands: [
       { cmd: 'df -h', desc: 'Comprobar qué partición se ha quedado sin espacio libre' },
       { cmd: 'du -sh /var/log/* | sort -hr | head -n 5', desc: 'Identificar los archivos más pesados dentro de /var/log' },
@@ -120,7 +120,7 @@ export const FHS_MISSIONS: FHSMission[] = [
     difficulty: 'Básico',
     category: 'Dispositivos y Montaje',
     symptom:
-      'Antes de poder formatear o montar la memoria USB Kingston que acabas de enchufar en el segundo puerto SATA/USB del servidor, necesitas localizar el archivo especial de bloques que el kernel y udev han creado para su primera partición.',
+      'Antes de poder formatear o montar la memoria USB Kingston que acabas de enchufar al servidor, necesitas localizar el archivo especial de bloques que el kernel y udev han creado para su primera partición.',
     objective:
       'Navega hasta el directorio de dispositivos y selecciona el fichero especial de bloques correspondiente a la primera partición del segundo disco (USB).',
     targetPaths: ['/dev/sdb1', '/dev/sdb'],
@@ -162,7 +162,8 @@ export const FHS_MISSIONS: FHSMission[] = [
     remediationEffect: 'Tabla /etc/fstab verificada con findmnt --verify: 0 errores. Montajes persistentes asegurados.',
     realWorldCommands: [
       { cmd: 'sudo blkid', desc: 'Obtener el UUID único de la partición (preferible a usar /dev/sdb1 que puede cambiar de letra)' },
-      { cmd: 'sudo nano /etc/fstab', desc: 'Añadir la línea UUID=... /mnt/datos ext4 defaults,nofail 0 2' },
+      { cmd: 'sudo mkdir -p /srv/datos', desc: 'Crear un punto de montaje permanente fuera de /mnt (que el FHS reserva para montajes temporales)' },
+      { cmd: 'sudo nano /etc/fstab', desc: 'Añadir la línea UUID=... /srv/datos ext4 defaults,nofail 0 2' },
       { cmd: 'sudo mount -a', desc: 'Probar inmediatamente el montaje de todas las entradas de /etc/fstab sin reiniciar (¡vital para evitar fallos de arranque!)' }
     ],
     wrongBranchHints: {
@@ -243,8 +244,8 @@ export const FHS_MISSIONS: FHSMission[] = [
     validBranchPrefixes: ['/', '/etc', '/etc/ssh', '/etc/ssh/sshd_config'],
     clue: 'Está dentro de /etc/ssh y contiene la letra "d" de daemon (servidor) en su nombre.',
     explanation:
-      '¡Correcto! Es fundamental distinguir entre /etc/ssh/ssh_config (configuración del cliente SSH cuando te conectas hacia fuera) y /etc/ssh/sshd_config (configuración del demonio servidor SSH que recibe conexiones). Cambiar "PermitRootLogin no" en sshd_config obliga a los administradores a entrar con un usuario normal y elevar privilegios con sudo.',
-    remediationCommand: 'sed -i "s/PermitRootLogin yes/PermitRootLogin no/" /etc/ssh/sshd_config && systemctl reload sshd',
+      '¡Correcto! Es fundamental distinguir entre /etc/ssh/ssh_config (configuración del cliente SSH cuando te conectas hacia fuera) y /etc/ssh/sshd_config (configuración del demonio servidor SSH que recibe conexiones). Poner "PermitRootLogin no" en sshd_config obliga a entrar con un usuario normal y elevar privilegios con sudo. En Ubuntu revisa también /etc/ssh/sshd_config.d/: sshd aplica el primer valor que encuentra, y los ficheros de ahí se leen antes.',
+    remediationCommand: "sed -i 's/^#\\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config && sshd -t && systemctl reload ssh",
     remediationEffect: 'Directiva actualizada a "PermitRootLogin no" en /etc/ssh/sshd_config y servicio sshd recargado.',
     realWorldCommands: [
       { cmd: 'sudo nano /etc/ssh/sshd_config', desc: 'Establecer PermitRootLogin no en la configuración del demonio' },
@@ -386,10 +387,11 @@ export const FHS_MISSIONS: FHSMission[] = [
     explanation:
       '¡Excelente! Cada partición ext2/ext3/ext4 tiene su propio directorio /lost+found. Cuando fsck encuentra bloques de datos con inodo válido pero desconectados de su carpeta original, los enlaza en /lost+found usando su número de inodo (#19402) para que el administrador pueda inspeccionarlos con el comando "file".',
     remediationCommand: 'file /lost+found/#19402',
-    remediationEffect: '/lost+found/#19402 identificado como texto ASCII y restaurado a su ubicación original.',
+    remediationEffect: '/lost+found/#19402: ASCII text. Es el documento perdido: ya puedes devolverlo a su sitio con mv.',
     realWorldCommands: [
       { cmd: 'sudo ls -la /lost+found', desc: 'Listar los inodos huérfanos recuperados por fsck (requiere root)' },
-      { cmd: 'sudo file /lost+found/#19402', desc: 'Averiguar qué tipo de archivo es el inodo recuperado' }
+      { cmd: 'sudo file /lost+found/#19402', desc: 'Averiguar qué tipo de archivo es el inodo recuperado' },
+      { cmd: 'sudo mv /lost+found/#19402 /home/alumno/informe.txt', desc: 'Devolverlo a su ubicación con un nombre nuevo (fsck no recuerda el original)' }
     ],
     wrongBranchHints: {
       '/tmp': '/tmp se vacía al reiniciar tras el corte eléctrico; fsck nunca guarda bloques recuperados en /tmp.',

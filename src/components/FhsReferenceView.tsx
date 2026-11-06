@@ -70,7 +70,7 @@ export const FhsReferenceView: React.FC<FhsReferenceViewProps> = ({ onJumpToPath
                 Configuración y arranque propios de esta máquina concreta; requieren acción del administrador para cambiar.
               </p>
               <div className="font-mono text-slate-200">
-                /etc · /boot · /root
+                /etc · /boot
               </div>
             </div>
 
@@ -94,7 +94,7 @@ export const FhsReferenceView: React.FC<FhsReferenceViewProps> = ({ onJumpToPath
                 Registros (logs), bloqueos, colas y temporales exclusivos del sistema operativo en ejecución.
               </p>
               <div className="font-mono text-slate-200">
-                /var/log · /var/lib · /var/run (/run) · /tmp
+                /var/log · /var/lib · /var/run (/run) · /var/lock · /tmp · /root
               </div>
             </div>
           </div>
