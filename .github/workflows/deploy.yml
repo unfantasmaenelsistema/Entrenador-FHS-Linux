@@ -1,8 +1,9 @@
-name: Desplegar en GitHub Pages
+name: Desplegar EmojiByte en GitHub Pages
 
 on:
   push:
-    branches: ["main", "master"]
+    branches: ["main"]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -11,39 +12,48 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "pages-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js 20
+      - name: Configurar Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: "npm"
+          node-version: 22
+          cache: npm
 
       - name: Instalar dependencias
-        run: npm install
+        run: npm ci
 
-      - name: Compilar aplicación para producción (Vite)
+      - name: Comprobar tipos
+        run: npm run lint
+
+      - name: Tests del motor (codificación, CRC-8, AES-GCM)
+        run: npm test
+
+      - name: Compilar aplicación estática (dist/)
         run: npm run build
 
-      - name: Configurar GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Subir artefacto de compilación (dist)
+      - name: Subir artefacto de Pages
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./dist"
+          path: ./dist
 
-      - name: Desplegar en GitHub Pages
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar en GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

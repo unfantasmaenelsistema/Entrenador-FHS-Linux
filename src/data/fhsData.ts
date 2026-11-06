@@ -54,29 +54,34 @@ export function decodePermissions(permStr: string): PermissionBreakdown {
   };
 
   let specialVal = 0;
-  let specialBit: string | null = null;
-  let specialBitExplanation: string | null = null;
+  const bits: string[] = [];
+  const explanations: string[] = [];
 
   if (u[2] === 's' || u[2] === 'S') {
     specialVal += 4;
-    specialBit = 'SUID (Set User ID = 4000)';
-    specialBitExplanation =
-      'El bit SUID hace que cualquier usuario que ejecute este binario lo corra temporalmente con los permisos de su propietario (root). Esencial en comandos como /bin/mount o /usr/bin/passwd.';
+    bits.push('SUID (Set User ID = 4000)');
+    explanations.push(
+      'SUID: quien ejecute este binario lo hace con los permisos de su propietario (aquí, root). Lo llevan comandos como mount o passwd. Una S mayúscula indica SUID sin permiso de ejecución.'
+    );
   }
   if (g[2] === 's' || g[2] === 'S') {
     specialVal += 2;
-    specialBit = 'SGID (Set Group ID = 2000)';
-    specialBitExplanation =
-      'En directorios, hace que los archivos nuevos hereden automáticamente el grupo del directorio padre.';
+    bits.push('SGID (Set Group ID = 2000)');
+    explanations.push(
+      'SGID: en un ejecutable, se ejecuta con el grupo del fichero; en un directorio, los archivos nuevos heredan el grupo del directorio.'
+    );
   }
   if (o[2] === 't' || o[2] === 'T') {
     specialVal += 1;
-    specialBit = 'Sticky Bit (Bit de persistencia = 1000)';
-    specialBitExplanation =
-      'Presente en /tmp (drwxrwxrwt = 1777). Permite que todos los usuarios creen archivos en el directorio, pero impide que un usuario borre o renombre archivos que pertenezcan a otro usuario.';
+    bits.push('Sticky Bit (= 1000)');
+    explanations.push(
+      'Sticky Bit: presente en /tmp (drwxrwxrwt = 1777). Todos pueden crear archivos en el directorio, pero solo el propietario de cada archivo (o root) puede borrarlo o renombrarlo.'
+    );
   }
 
   const octal = `${specialVal}${calcTriad(u)}${calcTriad(g)}${calcTriad(o)}`;
+  const specialBit = bits.length ? bits.join(' + ') : null;
+  const specialBitExplanation = explanations.length ? explanations.join(' ') : null;
 
   return {
     fileTypeChar: typeChar,
@@ -272,12 +277,12 @@ export const INITIAL_FHS_TREE: FHSNode = {
           type: 'block',
           permissions: 'brw-rw----',
           owner: 'root:disk',
-          size: '8, 0 (120G)',
+          size: '8, 0 (50G)',
           inode: 301,
           modified: 'Nov 03 08:00',
           fhsCategory: 'Dispositivos',
           shareable: 'No compartible',
-          summary: 'Primer disco duro SATA/SCSI principal del sistema (120 GB).',
+          summary: 'Primer disco SATA/SCSI del sistema (50 GB).',
           fhsDescription: 'Dispositivo de bloques completo que contiene la tabla de particiones GPT del disco del sistema.'
         },
         {
@@ -286,7 +291,7 @@ export const INITIAL_FHS_TREE: FHSNode = {
           type: 'block',
           permissions: 'brw-rw----',
           owner: 'root:disk',
-          size: '8, 1 (119G)',
+          size: '8, 1 (50G)',
           inode: 302,
           modified: 'Nov 03 08:00',
           fhsCategory: 'Dispositivos',
@@ -323,7 +328,7 @@ export const INITIAL_FHS_TREE: FHSNode = {
           summary: 'Primera partición del pendrive USB externo (lista para ser montada).',
           fhsDescription: 'Nodo de dispositivo de bloques correspondiente a la partición de datos dentro del pendrive USB (/dev/sdb). Para acceder a sus ficheros debe ejecutarse: mount /dev/sdb1 /mnt/pendrive.',
           commonMistake: 'Intentar hacer "cd /dev/sdb1" devuelve el error "Not a directory". /dev/sdb1 es el nodo de bloque que se pasa como origen al comando mount.',
-          content: `LABEL="USB_RESCATE" UUID="4A8F-9C21" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="a1b2c3d4-01"\nEstado actual: Listo para montaje manual en /mnt/pendrive.`
+          content: `LABEL="USB_RESCATE" UUID="4A8F-9C21" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="a1b2c3d4-01"\nEstado actual: Listo para montaje manual en /mnt/pendrive.`
         },
         {
           path: '/dev/nvme0n1',
@@ -331,7 +336,7 @@ export const INITIAL_FHS_TREE: FHSNode = {
           type: 'block',
           permissions: 'brw-rw----',
           owner: 'root:disk',
-          size: '259, 0 (500G)',
+          size: '259, 0 (50G)',
           inode: 315,
           modified: 'Nov 03 08:00',
           fhsCategory: 'Dispositivos',
@@ -594,7 +599,7 @@ export const INITIAL_FHS_TREE: FHSNode = {
           fhsCategory: 'Estático',
           shareable: 'No compartible',
           summary: 'Archivos YAML de configuración declarativa de interfaces de red (IP, máscara, gateway, DNS).',
-          fhsDescription: 'Utilizado en Ubuntu Server/Debian modernos para generar la configuración de NetworkManager o systemd-networkd mediante "netplan apply".',
+          fhsDescription: 'Utilizado en Ubuntu (y en algunas imágenes de Debian para la nube) para generar la configuración de systemd-networkd o NetworkManager con "netplan apply". Debian usa por defecto /etc/network/interfaces o NetworkManager.',
           children: [
             {
               path: '/etc/netplan/01-netcfg.yaml',
@@ -699,7 +704,7 @@ export const INITIAL_FHS_TREE: FHSNode = {
                   fhsCategory: 'Estático',
                   shareable: 'No compartible',
                   summary: 'Configuración del VirtualHost por defecto en el puerto 80.',
-                  fhsDescription: 'Apunta el DocumentRoot a /srv/www/html.',
+                  fhsDescription: 'Su directiva root apunta a /srv/www/html (DocumentRoot es el equivalente en Apache).',
                   content: `server {\n    listen 80 default_server;\n    server_name _;\n    root /srv/www/html;\n    index index.html;\n\n    location / {\n        try_files $uri $uri/ =404;\n    }\n}`
                 }
               ]
@@ -1196,7 +1201,7 @@ export const INITIAL_FHS_TREE: FHSNode = {
           fhsCategory: 'Virtual (RAM)',
           shareable: 'Virtual / Kernel',
           summary: 'Versión exacta del kernel Linux en ejecución y compilador GCC empleado.',
-          fhsDescription: 'Fuente de datos del comando "uname -a".',
+          fhsDescription: 'Muestra la misma información que "uname -a", aunque uname no lee este fichero: la obtiene con la llamada al sistema uname().',
           content: `Linux version 6.8.0-45-generic (buildd@lcy02-amd64-044) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.2.0-23ubuntu4) 13.2.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #45-Ubuntu SMP PREEMPT_DYNAMIC`
         },
         {
@@ -1336,14 +1341,14 @@ export const INITIAL_FHS_TREE: FHSNode = {
       symlinkTarget: '/usr/sbin',
       permissions: 'lrwxrwxrwx',
       owner: 'root:root',
-      size: '9B',
+      size: '8B',
       inode: 15,
       modified: 'Oct 14 09:00',
       fhsCategory: 'Estático',
       shareable: 'Compartible',
-      summary: 'Binarios esenciales de administración del sistema (exclusivos para root).',
+      summary: 'Binarios esenciales de administración del sistema (pensados para root).',
       fhsDescription:
-        'Contiene utilidades críticas para el arranque, reparación de sistemas de archivos y configuración de red de bajo nivel: fsck, mkfs.ext4, fdisk, blkid, iptables, sysctl, reboot.',
+        'Contiene utilidades críticas para el arranque, la reparación de sistemas de archivos y la configuración de red de bajo nivel: fsck, mkfs.ext4, fdisk, blkid, iptables, sysctl, reboot. Un usuario normal puede ejecutar muchas, pero casi todas necesitan privilegios para hacer algo. Con UsrMerge, /sbin es un enlace a /usr/sbin.',
       children: [
         {
           path: '/sbin/fsck',
@@ -1450,7 +1455,7 @@ export const INITIAL_FHS_TREE: FHSNode = {
       shareable: 'No compartible',
       summary: 'Ficheros temporales volátiles creados por aplicaciones y usuarios (con Sticky Bit t).',
       fhsDescription:
-        'Espacio temporal donde cualquier usuario o proceso puede crear archivos de trabajo (permisos 1777, representados como drwxrwxrwt). El bit "t" final (Sticky Bit) impide que un usuario borre los archivos temporales de otro usuario. Su contenido se vacía automáticamente al reiniciar el sistema.',
+        'Espacio temporal donde cualquier usuario o proceso puede crear archivos de trabajo (permisos 1777, representados como drwxrwxrwt). El bit "t" final (Sticky Bit) impide que un usuario borre los archivos temporales de otro usuario. El FHS permite vaciarlo al reiniciar: en muchas distribuciones es un tmpfs en RAM y en otras lo limpia systemd-tmpfiles al arrancar.',
       commonMistake:
         'Si un programa necesita guardar datos temporales que DEBEN sobrevivir a un reinicio del servidor, debe usar /var/tmp en lugar de /tmp.',
       children: [
@@ -1481,9 +1486,9 @@ export const INITIAL_FHS_TREE: FHSNode = {
       modified: 'Oct 14 09:00',
       fhsCategory: 'Estático',
       shareable: 'Compartible',
-      summary: 'Unix System Resources: jerarquía secundaria de solo lectura con todo el software del sistema.',
+      summary: 'Jerarquía secundaria de solo lectura con el software del sistema instalado por paquetes.',
       fhsDescription:
-        '/usr (Unix System Resources, no "user") contiene la inmensa mayoría de utilidades multiusuario, aplicaciones, librerías y documentación instaladas por el gestor de paquetes (apt, dnf, pacman). Su contenido es estático y compartible en modo solo lectura.',
+        '/usr contiene la inmensa mayoría de utilidades multiusuario, aplicaciones, librerías y documentación instaladas por el gestor de paquetes (apt, dnf, pacman). Su contenido es estático y compartible en modo solo lectura. El nombre viene de "user": en los primeros Unix ahí estaban los directorios personales; "Unix System Resources" es un acrónimo inventado después.',
       commonMistake:
         'No confundir /usr con /home. En /usr van los programas instalados en el sistema; en /home van los archivos personales de los usuarios.',
       children: [
@@ -1715,7 +1720,7 @@ export const INITIAL_FHS_TREE: FHSNode = {
           fhsCategory: 'Variable',
           shareable: 'No compartible',
           summary: 'Archivos temporales que DEBEN conservarse entre reinicios del sistema (con Sticky Bit t).',
-          fhsDescription: 'Según el estándar FHS 3.0, /var/tmp aloja datos temporales que las aplicaciones necesitan preservar incluso si el servidor se reinicia (a diferencia de /tmp, que se limpia en cada arranque).',
+          fhsDescription: 'Según el estándar FHS 3.0, /var/tmp aloja datos temporales que deben conservarse aunque el servidor se reinicie (a diferencia de /tmp). Ojo: systemd-tmpfiles borra los que llevan más de 30 días sin usarse.',
           children: [
             {
               path: '/var/tmp/recuperacion_editor.swp',

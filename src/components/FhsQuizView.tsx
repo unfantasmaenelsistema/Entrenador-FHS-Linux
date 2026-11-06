@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { CheckCircle2, XCircle, RotateCcw, Award, ArrowRight, Download, Copy, Check } from 'lucide-react';
 import { FHS_QUIZ_QUESTIONS, FHS_MISSIONS } from '../data/missionsData';
+import { isClean, recordLabel, type MissionRecord } from '../engine/missions';
 
 interface FhsQuizViewProps {
-  completedMissionIds?: string[];
+  missionRecords?: Record<string, MissionRecord>;
 }
 
-export const FhsQuizView: React.FC<FhsQuizViewProps> = ({ completedMissionIds = [] }) => {
+export const FhsQuizView: React.FC<FhsQuizViewProps> = ({ missionRecords = {} }) => {
+  const completedMissionIds = Object.keys(missionRecords);
+  const cleanCount = Object.values(missionRecords).filter(isClean).length;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Record<string, boolean>>({});
@@ -49,7 +52,10 @@ export const FhsQuizView: React.FC<FhsQuizViewProps> = ({ completedMissionIds = 
     const solvedMissionsList = FHS_MISSIONS.filter((m) =>
       completedMissionIds.includes(m.id)
     )
-      .map((m) => `  [OK] Caso #${m.number} (${m.difficulty}): ${m.title} -> ${m.exactFileTarget}`)
+      .map(
+        (m) =>
+          `  [OK] Caso #${m.number} (${m.difficulty}): ${m.title} -> ${m.exactFileTarget} · ${recordLabel(missionRecords[m.id])}`
+      )
       .join('\n');
 
     return [
@@ -61,12 +67,13 @@ export const FhsQuizView: React.FC<FhsQuizViewProps> = ({ completedMissionIds = 
       `Grupo / Módulo: ${studentGroup.trim() || 'Sistemas Informáticos'}`,
       `Fecha de generación: ${dateStr}`,
       '-------------------------------------------------------------------',
-      `1. INCIDENCIAS PRÁCTICAS RESUELTAS EN ÁRBOL FHS: ${completedMissionIds.length} / ${FHS_MISSIONS.length}`,
+      `1. INCIDENCIAS PRÁCTICAS RESUELTAS EN ÁRBOL FHS: ${completedMissionIds.length} / ${FHS_MISSIONS.length} (impecables: ${cleanCount})`,
+      '   Impecable = modo estricto, sin desvíos de rama, sin rutas equivocadas y sin pista.',
       solvedMissionsList || '  (Ninguna incidencia completada aún)',
       '-------------------------------------------------------------------',
-      `2. TEST DE CERTIFICACIÓN LPIC-1 (OBJETIVO 104.7): ${correctCount} / ${totalQuestions} (${Math.round(
+      `2. TEST DE PRÁCTICA (OBJETIVO LPIC-1 104.7): ${correctCount} / ${totalQuestions} (${Math.round(
         (correctCount / totalQuestions) * 100
-      )}%)`,
+      )}%)${finished ? '' : ` · test sin terminar (${Object.keys(answers).length} respondidas)`}`,
       '==================================================================='
     ].join('\n');
   };
@@ -83,7 +90,9 @@ export const FhsQuizView: React.FC<FhsQuizViewProps> = ({ completedMissionIds = 
     const a = document.createElement('a');
     a.href = url;
     a.download = `informe-fhs-${(studentName || 'alumno').toLowerCase().replace(/\s+/g, '-')}.txt`;
+    document.body.appendChild(a);
     a.click();
+    a.remove();
     URL.revokeObjectURL(url);
   };
 
@@ -99,7 +108,7 @@ export const FhsQuizView: React.FC<FhsQuizViewProps> = ({ completedMissionIds = 
                   Evaluación LPIC-1 · Tema 104.7 (FHS 3.0)
                 </span>
                 <h2 className="text-xl font-semibold text-white">
-                  Resultado del Test de Certificación FHS
+                  Resultado del test de práctica FHS
                 </h2>
               </div>
               <Award className="w-10 h-10 text-emerald-400" />

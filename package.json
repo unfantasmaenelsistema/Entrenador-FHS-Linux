@@ -1,38 +1,33 @@
 {
   "name": "entrenador-fhs-linux",
-  "private": false,
-  "version": "1.0.0",
-  "description": "Entrenador interactivo de la Jerarquía del Sistema de Ficheros Linux (FHS 3.0) con 16 casos reales de administración, terminal bash sincronizada, simulador de montajes y test LPIC-1. Por Un Fantasma en el Sistema.",
-  "homepage": "https://www.unfantasmaenelsistema.com/",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Entrenador de la jerarquía del sistema de ficheros Linux (FHS 3.0): 16 incidencias reales que se resuelven navegando el árbol, terminal bash sincronizada, simulador de montajes y test de práctica LPIC-1 (104.7). Por Un Fantasma en el Sistema.",
+  "homepage": "https://unfantasmaenelsistema.github.io/Entrenador-FHS-Linux/",
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
-    "clean": "rm -rf dist server.js",
+    "test": "vitest run",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@google/genai": "^2.4.0",
-    "@tailwindcss/vite": "^4.3.3",
-    "@vitejs/plugin-react": "^6.1.1",
     "lucide-react": "^0.546.0",
     "react": "^19.0.1",
-    "react-dom": "^19.0.1",
-    "vite": "^8.3.0",
-    "express": "^4.21.2",
-    "dotenv": "^17.2.3",
-    "motion": "^12.23.24"
+    "react-dom": "^19.0.1"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^22.14.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "autoprefixer": "^10.4.21",
-    "esbuild": "^0.25.0",
+    "@vitejs/plugin-react": "^6.1.1",
     "tailwindcss": "^4.3.3",
-    "tsx": "^4.21.0",
     "typescript": "^7.0.2",
-    "@types/express": "^4.17.21"
-  }
+    "vite": "^8.3.0",
+    "vitest": "^5.1.0"
+  },
+  "author": "Un Fantasma en el Sistema <https://www.unfantasmaenelsistema.com/>",
+  "license": "MIT"
 }
